@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     "@nuxt/scripts",
     "shadcn-nuxt",
   ],
-  css: ["~/assets/css/tailwind.css"],
+  css: ["~/assets/css/tailwind.css", "~/assets/css/animations.css"],
   vite: {
     plugins: [tailwindcss()],
   },
@@ -26,5 +26,36 @@ export default defineNuxtConfig({
      * @default "./components/ui"
      */
     componentDir: "./app/components/ui",
+  },
+  content: {
+    highlight: {
+      theme: {
+        default: "github-light",
+        dark: "github-dark",
+      },
+    },
+  },
+
+  app: {
+    head: {
+      title: "Elvis Kemboi - Full Stack Developer",
+      meta: [
+        { charset: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        {
+          name: "description",
+          content:
+            "Full Stack Developer specializing in Vue.js, Nuxt, Node.js, and modern web technologies. Building innovative software solutions.",
+        },
+      ],
+      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    },
+    pageTransition: { name: "page", mode: "out-in" },
+  },
+
+  colorMode: {
+    classSuffix: "",
+    preference: "system",
+    fallback: "light",
   },
 });
