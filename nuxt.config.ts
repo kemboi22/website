@@ -4,14 +4,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
-  modules: [
-    "@nuxt/content",
-    "@nuxt/fonts",
-    "@nuxt/icon",
-    "@nuxt/image",
-    "@nuxt/scripts",
-    "shadcn-nuxt",
-  ],
+  modules: ["@nuxt/content", "@nuxt/fonts", "@nuxt/icon", "@nuxt/image", "@nuxt/scripts", "shadcn-nuxt", "@nuxtjs/color-mode"],
   css: ["~/assets/css/tailwind.css", "~/assets/css/animations.css"],
   vite: {
     plugins: [tailwindcss()],

@@ -9,7 +9,7 @@
           to="/"
           class="text-xl md:text-2xl font-serif font-bold tracking-tight hover:opacity-70 transition-opacity"
         >
-          Elvis Kemboi
+          Kemboi Elvis
         </NuxtLink>
 
         <!-- Desktop Navigation -->

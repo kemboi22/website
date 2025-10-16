@@ -1,10 +1,9 @@
-import { useColorMode } from "@vueuse/core";
 import { computed } from "vue";
 
 export const useTheme = () => {
   const colorMode = useColorMode();
 
-  const isDark = computed(() => colorMode.value === "dark");
+  const isDark = computed(() => colorMode.value == "dark");
 
   const toggleTheme = async (event?: MouseEvent) => {
     // Check if View Transitions API is supported
