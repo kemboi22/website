@@ -248,40 +248,40 @@ useHead({
 
 <style>
 /* Added prose styles for markdown content */
-.prose {
-  @apply text-foreground;
-}
-
-.prose h2 {
-  @apply text-3xl font-serif font-bold mt-12 mb-6;
-}
-
-.prose h3 {
-  @apply text-2xl font-serif font-bold mt-8 mb-4;
-}
-
-.prose p {
-  @apply text-muted-foreground leading-relaxed mb-6;
-}
-
-.prose ul,
-.prose ol {
-  @apply text-muted-foreground leading-relaxed mb-6 pl-6;
-}
-
-.prose li {
-  @apply mb-2;
-}
-
-.prose strong {
-  @apply text-foreground font-semibold;
-}
-
-.prose code {
-  @apply bg-muted px-2 py-1 rounded text-sm font-mono;
-}
-
-.prose pre {
-  @apply bg-muted p-4 rounded overflow-x-auto mb-6;
-}
+/* .prose { */
+/*   @apply text-foreground; */
+/* } */
+/**/
+/* .prose h2 { */
+/*   @apply text-3xl font-serif font-bold mt-12 mb-6; */
+/* } */
+/**/
+/* .prose h3 { */
+/*   @apply text-2xl font-serif font-bold mt-8 mb-4; */
+/* } */
+/**/
+/* .prose p { */
+/*   @apply text-muted-foreground leading-relaxed mb-6; */
+/* } */
+/**/
+/* .prose ul, */
+/* .prose ol { */
+/*   @apply text-muted-foreground leading-relaxed mb-6 pl-6; */
+/* } */
+/**/
+/* .prose li { */
+/*   @apply mb-2; */
+/* } */
+/**/
+/* .prose strong { */
+/*   @apply text-foreground font-semibold; */
+/* } */
+/**/
+/* .prose code { */
+/*   @apply bg-muted px-2 py-1 rounded text-sm font-mono; */
+/* } */
+/**/
+/* .prose pre { */
+/*   @apply bg-muted p-4 rounded overflow-x-auto mb-6; */
+/* } */
 </style>

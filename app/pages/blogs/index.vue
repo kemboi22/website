@@ -1,3 +1,30 @@
+<script setup lang="ts">
+const { data: allPosts } = await useAsyncData("blog-posts", () =>
+  queryCollection("blogs").all(),
+);
+console.log(allPosts.value);
+const featuredPost = computed(() => allPosts.value?.[0]);
+const posts = computed(() => allPosts.value?.slice(1) || []);
+
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+};
+
+useHead({
+  title: "Blog - Portfolio",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Read articles about design, development, and the creative process.",
+    },
+  ],
+});
+</script>
 <template>
   <div class="pt-16">
     <!-- Hero Section -->
@@ -31,7 +58,7 @@
           >Featured</span
         >
         <NuxtLink
-          :to="featuredPost._path"
+          :to="featuredPost.path"
           class="group grid grid-cols-1 md:grid-cols-2 gap-12 mt-8"
         >
           <div
@@ -39,7 +66,8 @@
           >
             <img
               :src="
-                featuredPost.image || '/placeholder.svg?height=600&width=800'
+                featuredPost.meta.image ||
+                '/placeholder.svg?height=600&width=800'
               "
               :alt="featuredPost.title"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -49,9 +77,9 @@
             <div
               class="flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-muted-foreground"
             >
-              <time>{{ formatDate(featuredPost.date) }}</time>
+              <time>{{ formatDate(featuredPost.meta.date) }}</time>
               <span>•</span>
-              <span>{{ featuredPost.readTime }}</span>
+              <span>{{ featuredPost.meta.readTime }}</span>
             </div>
             <h2
               class="text-4xl md:text-5xl font-serif font-bold group-hover:text-muted-foreground transition-colors"
@@ -89,13 +117,15 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <NuxtLink
             v-for="post in posts"
-            :key="post._path"
-            :to="post._path"
+            :key="post.path"
+            :to="post.path"
             class="group block border border-border hover:border-foreground"
           >
             <div class="aspect-[4/3] overflow-hidden bg-muted">
               <img
-                :src="post.image || '/placeholder.svg?height=400&width=600'"
+                :src="
+                  post.meta.image || '/placeholder.svg?height=400&width=600'
+                "
                 :alt="post.title"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -104,9 +134,9 @@
               <div
                 class="flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-muted-foreground"
               >
-                <time>{{ formatDate(post.date) }}</time>
+                <time>{{ formatDate(post.meta.date as string) }}</time>
                 <span>•</span>
-                <span>{{ post.readTime }}</span>
+                <span>{{ post.meta.readTime }}</span>
               </div>
               <h3
                 class="text-xl font-serif font-bold group-hover:text-muted-foreground transition-colors"
@@ -125,31 +155,3 @@
     </section>
   </div>
 </template>
-
-<script setup lang="ts">
-const { data: allPosts } = await useAsyncData("blog-posts", () =>
-  queryContent("/blog").sort({ date: -1 }).find(),
-);
-
-const featuredPost = computed(() => allPosts.value?.[0]);
-const posts = computed(() => allPosts.value?.slice(1) || []);
-
-const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-};
-
-useHead({
-  title: "Blog - Portfolio",
-  meta: [
-    {
-      name: "description",
-      content:
-        "Read articles about design, development, and the creative process.",
-    },
-  ],
-});
-</script>

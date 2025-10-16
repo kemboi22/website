@@ -1,6 +1,6 @@
 <template>
   <NuxtLink
-    :to="`/projects/${project.id}`"
+    :to="project._path"
     class="group block overflow-hidden border border-border hover:border-foreground relative"
     @mouseenter="showPreview = true"
     @mouseleave="showPreview = false"
@@ -68,11 +68,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "#imports";
-
 defineProps<{
   project: {
-    id: number;
+    _path: string;
     title: string;
     category: string;
     description: string;

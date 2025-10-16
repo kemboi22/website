@@ -115,7 +115,7 @@ const navLinks = [
   { name: "Projects", path: "/projects" },
   { name: "Services", path: "/services" },
   { name: "Tech Stack", path: "/tech-stack" },
-  { name: "Blog", path: "/blog" },
+  { name: "Blog", path: "/blogs" },
   { name: "Contact", path: "/contact" },
 ];
 

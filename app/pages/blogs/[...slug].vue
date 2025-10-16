@@ -1,3 +1,32 @@
+<script setup lang="ts">
+import { onMounted } from "vue";
+
+const route = useRoute();
+
+const { data: post } = await useAsyncData(`blog-${route.path}`, () =>
+  queryCollection("blogs").path(route.path).first(),
+);
+
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+};
+
+useHead({
+  title: computed(() =>
+    post.value ? `${post.value.title} - Blog` : "Blog Post",
+  ),
+  meta: [
+    {
+      name: "description",
+      content: computed(() => post.value?.description || ""),
+    },
+  ],
+});
+</script>
 <template>
   <div class="pt-16">
     <article v-if="post">
@@ -9,7 +38,7 @@
           >
             <time>{{ formatDate(post.date) }}</time>
             <span>•</span>
-            <span>{{ post.readTime }}</span>
+            <span>{{ post.meta.readTime }}</span>
           </div>
           <h1
             class="text-5xl md:text-6xl lg:text-7xl font-serif font-bold tracking-tight"
@@ -23,11 +52,11 @@
       </header>
 
       <!-- Featured Image -->
-      <div v-if="post.image" class="px-6 py-12">
+      <div v-if="post.meta.image" class="px-6 py-12">
         <div class="container mx-auto max-w-5xl">
           <div class="aspect-[21/9] overflow-hidden border border-border">
             <img
-              :src="post.image"
+              :src="post.meta.image"
               :alt="post.title"
               class="w-full h-full object-cover"
             />
@@ -37,7 +66,7 @@
 
       <!-- Content -->
       <div class="py-12 px-6">
-        <div class="container mx-auto max-w-3xl">
+        <div class="container mx-auto max-w-6xl">
           <div
             class="prose prose-lg prose-neutral dark:prose-invert max-w-none"
           >
@@ -56,17 +85,15 @@
               <div
                 class="w-16 h-16 rounded-full border-2 border-foreground overflow-hidden"
               >
-                <img
-                  src="/placeholder.svg?height=64&width=64"
-                  alt="Author"
-                  class="w-full h-full object-cover"
-                />
+                <!-- <img -->
+                <!--   src="placeholder.svg?height=64&width=64" -->
+                <!--   alt="Author" -->
+                <!--   class="w-full h-full object-cover" -->
+                <!-- /> -->
               </div>
               <div>
-                <p class="font-serif font-bold text-lg">Your Name</p>
-                <p class="text-sm text-muted-foreground">
-                  Creative Developer & Designer
-                </p>
+                <p class="font-serif font-bold text-lg">Kemboi Elvis</p>
+                <p class="text-sm text-muted-foreground">Software Engineer</p>
               </div>
             </div>
             <div class="flex items-center gap-4">
@@ -104,7 +131,7 @@
       <nav class="py-12 px-6 border-t border-border">
         <div class="container mx-auto max-w-3xl">
           <NuxtLink
-            to="/blog"
+            to="/blogs"
             class="flex items-center gap-2 text-sm font-medium hover:gap-4 transition-all"
           >
             <svg
@@ -128,81 +155,21 @@
   </div>
 </template>
 
-<script setup lang="ts">
-const route = useRoute();
-
-const { data: post } = await useAsyncData(`blog-${route.path}`, () =>
-  queryContent(route.path).findOne(),
-);
-
-const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-};
-
-useHead({
-  title: computed(() =>
-    post.value ? `${post.value.title} - Blog` : "Blog Post",
-  ),
-  meta: [
-    {
-      name: "description",
-      content: computed(() => post.value?.description || ""),
-    },
-  ],
-});
-</script>
-
 <style>
-.blog-content {
-  @apply text-foreground;
+.copy-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #333;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
-.blog-content h2 {
-  @apply text-3xl font-serif font-bold mt-12 mb-6;
-}
-
-.blog-content h3 {
-  @apply text-2xl font-serif font-bold mt-8 mb-4;
-}
-
-.blog-content p {
-  @apply text-muted-foreground leading-relaxed mb-6;
-}
-
-.blog-content a {
-  @apply text-foreground underline hover:no-underline;
-}
-
-.blog-content ul,
-.blog-content ol {
-  @apply space-y-2 mb-6 pl-6;
-}
-
-.blog-content li {
-  @apply text-muted-foreground;
-}
-
-.blog-content code {
-  @apply bg-muted px-2 py-1 rounded text-sm font-mono;
-}
-
-.blog-content pre {
-  @apply bg-muted p-6 rounded-lg overflow-x-auto mb-6;
-}
-
-.blog-content pre code {
-  @apply bg-transparent p-0;
-}
-
-.blog-content blockquote {
-  @apply border-l-4 border-foreground pl-6 italic my-8;
-}
-
-.blog-content img {
-  @apply w-full rounded-lg my-8;
+.copy-button:hover {
+  background: #555;
 }
 </style>
