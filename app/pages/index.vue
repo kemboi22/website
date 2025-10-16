@@ -23,7 +23,7 @@
               <h1
                 class="text-5xl md:text-7xl font-serif font-bold tracking-tight leading-none"
               >
-                Elvis Kemboi
+                Kemboi Elvis
               </h1>
               <p class="text-xl md:text-2xl text-muted-foreground font-light">
                 Building scalable solutions across the stack
@@ -609,7 +609,7 @@ const { data: featuredProjects } = await useAsyncData("featured-projects", () =>
 );
 
 useHead({
-  title: "Elvis Kemboi - Full Stack Developer",
+  title: " Kemboi Elvis - Full Stack Developer",
   meta: [
     {
       name: "description",
