@@ -5,10 +5,46 @@ import {
   ArrowUpRight,
   GithubIcon,
 } from "lucide-vue-next";
+import { onMounted } from "vue";
 
 const route = useRoute();
 const { isDark } = useTheme();
 const config = useRuntimeConfig();
+
+const addCopyButtons = () => {
+  const preElements = document.querySelectorAll('pre');
+  preElements.forEach((pre) => {
+    if (pre.querySelector('.copy-button')) return; // Already has button
+
+    const button = document.createElement('button');
+    button.className = 'copy-button';
+    button.textContent = 'Copy';
+    button.addEventListener('click', async () => {
+      const code = pre.querySelector('code');
+      if (code) {
+        try {
+          await navigator.clipboard.writeText(code.textContent || '');
+          button.textContent = 'Copied!';
+          setTimeout(() => {
+            button.textContent = 'Copy';
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy: ', err);
+          button.textContent = 'Failed';
+          setTimeout(() => {
+            button.textContent = 'Copy';
+          }, 2000);
+        }
+      }
+    });
+    pre.style.position = 'relative';
+    pre.appendChild(button);
+  });
+};
+
+onMounted(() => {
+  addCopyButtons();
+});
 
 const { data: project } = await useAsyncData(`project-${route.path}`, () =>
   queryCollection("projects").path(route.path).first(),
@@ -154,22 +190,46 @@ useHead({
                   <p class="font-medium">{{ project.meta.category }}</p>
                 </div>
 
-                <div>
-                  <h3
-                    class="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-3"
-                  >
-                    Technologies
-                  </h3>
-                  <div class="flex flex-wrap gap-2">
-                    <span
-                      v-for="tech in project.meta.technologies"
-                      :key="tech"
-                      class="px-3 py-1 border border-border text-xs font-medium"
-                    >
-                      {{ tech }}
-                    </span>
-                  </div>
-                </div>
+                 <div>
+                   <h3
+                     class="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-3"
+                   >
+                     Technologies
+                   </h3>
+                   <div class="flex flex-wrap gap-2">
+                     <span
+                       v-for="tech in project.meta.technologies"
+                       :key="tech"
+                       class="px-3 py-1 border border-border text-xs font-medium"
+                     >
+                       {{ tech }}
+                     </span>
+                   </div>
+                 </div>
+
+                 <!-- Table of Contents -->
+                 <div v-if="project.toc && project.toc.length > 0">
+                   <h3
+                     class="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-3"
+                   >
+                     Table of Contents
+                   </h3>
+                   <nav class="space-y-2">
+                     <a
+                       v-for="item in project.toc"
+                       :key="item.id"
+                       :href="`#${item.id}`"
+                       class="block text-sm hover:text-foreground transition-colors"
+                       :class="{
+                         'pl-2': item.depth > 2,
+                         'pl-4': item.depth > 3,
+                         'text-muted-foreground': item.depth > 2
+                       }"
+                     >
+                       {{ item.text }}
+                     </a>
+                   </nav>
+                 </div>
 
                 <!-- Added links for live URL and GitHub -->
                 <div class="pt-4 space-y-3">
@@ -224,4 +284,21 @@ useHead({
     </div>
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.copy-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #333;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.copy-button:hover {
+  background: #555;
+}
+</style>

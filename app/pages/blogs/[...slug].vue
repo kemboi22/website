@@ -15,6 +15,41 @@ const formatDate = (date: string) => {
   });
 };
 
+const addCopyButtons = () => {
+  const preElements = document.querySelectorAll('pre');
+  preElements.forEach((pre) => {
+    if (pre.querySelector('.copy-button')) return; // Already has button
+
+    const button = document.createElement('button');
+    button.className = 'copy-button';
+    button.textContent = 'Copy';
+    button.addEventListener('click', async () => {
+      const code = pre.querySelector('code');
+      if (code) {
+        try {
+          await navigator.clipboard.writeText(code.textContent || '');
+          button.textContent = 'Copied!';
+          setTimeout(() => {
+            button.textContent = 'Copy';
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy: ', err);
+          button.textContent = 'Failed';
+          setTimeout(() => {
+            button.textContent = 'Copy';
+          }, 2000);
+        }
+      }
+    });
+    pre.style.position = 'relative';
+    pre.appendChild(button);
+  });
+};
+
+onMounted(() => {
+  addCopyButtons();
+});
+
 useHead({
   title: computed(() =>
     post.value ? `${post.value.title} - Blog` : "Blog Post",
@@ -64,16 +99,45 @@ useHead({
         </div>
       </div>
 
-      <!-- Content -->
-      <div class="py-12 px-6">
-        <div class="container mx-auto max-w-6xl">
-          <div
-            class="prose prose-lg prose-neutral dark:prose-invert max-w-none"
-          >
-            <ContentRenderer :value="post" class="blog-content" />
-          </div>
-        </div>
-      </div>
+       <!-- Content -->
+       <div class="py-12 px-6">
+         <div class="container mx-auto max-w-6xl">
+           <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+             <!-- Main Content -->
+             <div class="lg:col-span-3">
+               <div
+                 class="prose prose-lg prose-neutral dark:prose-invert max-w-none"
+               >
+                 <ContentRenderer :value="post" class="blog-content" />
+               </div>
+             </div>
+
+             <!-- Table of Contents -->
+             <div v-if="post.toc && post.toc.length > 0" class="lg:col-span-1">
+               <div class="sticky top-24">
+                 <h3 class="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4">
+                   Table of Contents
+                 </h3>
+                 <nav class="space-y-2">
+                   <a
+                     v-for="item in post.toc"
+                     :key="item.id"
+                     :href="`#${item.id}`"
+                     class="block text-sm hover:text-foreground transition-colors"
+                     :class="{
+                       'pl-2': item.depth > 2,
+                       'pl-4': item.depth > 3,
+                       'text-muted-foreground': item.depth > 2
+                     }"
+                   >
+                     {{ item.text }}
+                   </a>
+                 </nav>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
 
       <!-- Author & Share -->
       <footer class="py-12 px-6 border-t border-border">
