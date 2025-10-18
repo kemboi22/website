@@ -7,8 +7,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://yourdomain.com'
-    }
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://yourdomain.com",
+    },
   },
 
   modules: [
@@ -133,6 +133,10 @@ export default defineNuxtConfig({
         "cache-control": "public, max-age=31536000, immutable",
       },
     },
+    "/sw.js": {
+      prerender: false,
+      index: false,
+    },
   },
 
   app: {
@@ -163,8 +167,7 @@ export default defineNuxtConfig({
           content:
             "Full Stack Developer specializing in Vue.js, Nuxt, Node.js, and modern web technologies.",
         },
-        { property: "og:type", content: "website" },
-        { property: "og:url", content: "https://yourdomain.com" },
+
         { property: "og:image", content: "/og-image.jpg" },
         { name: "twitter:card", content: "summary_large_image" },
         {
