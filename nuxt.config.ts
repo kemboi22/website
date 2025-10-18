@@ -23,18 +23,14 @@ export default defineNuxtConfig({
     "@nuxtjs/robots",
   ],
 
-  css: ["~/assets/css/tailwind.css", "~/assets/css/animations.css"],
+  css: ["./app/assets/css/tailwind.css", "./app/assets/css/animations.css"],
 
   vite: {
     plugins: [tailwindcss()],
     build: {
-      cssCodeSplit: true,
+      cssCodeSplit: false,
       rollupOptions: {
-        output: {
-          manualChunks: {
-            vendor: ["vue", "vue-router"],
-          },
-        },
+        output: { manualChunks: { vendor: ["vue", "vue-router"] } },
       },
     },
   },
@@ -111,7 +107,6 @@ export default defineNuxtConfig({
   routeRules: {
     "/": {
       prerender: true,
-      swr: 60 * 60 * 24, // Cache for 24 hours
     },
     "/blogs/**": {
       prerender: true,
@@ -123,19 +118,10 @@ export default defineNuxtConfig({
       cors: true,
       cache: { maxAge: 60 * 60 }, // 1 hour cache
     },
-    "/_nuxt/**": {
-      headers: {
-        "cache-control": "public, max-age=31536000, immutable",
-      },
-    },
     "/images/**": {
       headers: {
         "cache-control": "public, max-age=31536000, immutable",
       },
-    },
-    "/sw.js": {
-      prerender: false,
-      index: false,
     },
   },
 
