@@ -1,6 +1,6 @@
 <template>
   <NuxtLink
-    :to="`/blog/${post.id}`"
+    :to="`/blogs/${post.id}`"
     class="group block p-6 border border-border hover:border-foreground hover:bg-muted/30"
   >
     <div class="space-y-4">

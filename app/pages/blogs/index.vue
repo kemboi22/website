@@ -2,7 +2,6 @@
 const { data: allPosts } = await useAsyncData("blog-posts", () =>
   queryCollection("blogs").all(),
 );
-console.log(allPosts.value);
 const featuredPost = computed(() => allPosts.value?.[0]);
 const posts = computed(() => allPosts.value?.slice(1) || []);
 

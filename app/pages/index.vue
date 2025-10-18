@@ -605,7 +605,7 @@ const experience = [
 ];
 
 const { data: featuredProjects } = await useAsyncData("featured-projects", () =>
-  queryContent("projects").where({ featured: true }).limit(4).find(),
+  queryCollection("projects").limit(3).all(),
 );
 
 useHead({
