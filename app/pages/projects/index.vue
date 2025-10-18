@@ -1,3 +1,92 @@
+<script setup lang="ts">
+import { ArrowRight } from "lucide-vue-next";
+
+const config = useRuntimeConfig();
+
+const selectedCategory = ref("All");
+
+const { data: allProjects } = await useAsyncData("projects", () =>
+  queryCollection("projects").all(),
+);
+
+const categories = computed(() => {
+  const cats = new Set(["All"]);
+  allProjects.value?.forEach((project) =>
+    cats.add(project.meta.category as string),
+  );
+  return Array.from(cats);
+});
+
+const filteredProjects = computed(() => {
+  if (!allProjects.value) return [];
+  if (selectedCategory.value === "All") {
+    return allProjects.value;
+  }
+  return allProjects.value.filter(
+    (project) => project.meta.category === selectedCategory.value,
+  );
+});
+
+useHead({
+  title: "Projects - Portfolio",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Explore my portfolio of web development, design, and branding projects.",
+    },
+    {
+      name: "keywords",
+      content:
+        "portfolio, projects, web development, design, branding, software engineering",
+    },
+    {
+      property: "og:title",
+      content: "Projects - Portfolio",
+    },
+    {
+      property: "og:description",
+      content:
+        "Explore my portfolio of web development, design, and branding projects.",
+    },
+    {
+      property: "og:type",
+      content: "website",
+    },
+    {
+      property: "og:url",
+      content: `${config.public.siteUrl}/projects`,
+    },
+    {
+      property: "og:image",
+      content: `${config.public.siteUrl}/og-image.jpg`,
+    },
+    {
+      name: "twitter:card",
+      content: "summary_large_image",
+    },
+    {
+      name: "twitter:title",
+      content: "Projects - Portfolio",
+    },
+    {
+      name: "twitter:description",
+      content:
+        "Explore my portfolio of web development, design, and branding projects.",
+    },
+    {
+      name: "twitter:image",
+      content: `${config.public.siteUrl}/og-image.jpg`,
+    },
+  ],
+  link: [
+    {
+      rel: "canonical",
+      href: `${config.public.siteUrl}/projects`,
+    },
+  ],
+});
+</script>
 <template>
   <div class="pt-16">
     <!-- Hero Section -->
@@ -56,41 +145,37 @@
         <div class="grid grid-cols-1 gap-24">
           <div
             v-for="(project, index) in filteredProjects"
-            :key="project._path"
+            :key="project.path"
             class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
             :class="index % 2 === 1 ? 'md:grid-flow-dense' : ''"
           >
             <!-- Image -->
             <NuxtLink
-              :to="project._path"
+              :to="project.path"
               :class="[
                 'group relative aspect-[4/3] overflow-hidden border border-border hover:border-foreground',
                 index % 2 === 1 ? 'md:col-start-2' : '',
               ]"
             >
               <img
-                :src="project.image"
+                v-if="!project.meta.liveUrl"
+                :src="project.meta.image"
                 :alt="project.title"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div
-                class="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors"
               />
 
               <!-- Added hover preview iframe -->
               <div
-                v-if="project.liveUrl"
+                v-if="project.meta.liveUrl"
                 class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
               >
                 <iframe
-                  :src="project.liveUrl"
+                  :src="project.meta.liveUrl"
                   class="w-full h-full border-0 scale-50 origin-top-left"
                   style="width: 200%; height: 200%"
                   loading="lazy"
                 />
-                <div
-                  class="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center"
-                >
+                <div class="absolute inset-0 flex items-center justify-center">
                   <span class="text-xs font-mono uppercase tracking-widest"
                     >Live Preview</span
                   >
@@ -103,9 +188,9 @@
               <div
                 class="flex items-center gap-4 text-xs font-mono uppercase tracking-widest text-muted-foreground"
               >
-                <span>{{ project.category }}</span>
+                <span>{{ project.meta.category }}</span>
                 <span>•</span>
-                <span>{{ project.year }}</span>
+                <span>{{ project.meta.year }}</span>
               </div>
               <div>
                 <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">
@@ -123,7 +208,7 @@
                 </h3>
                 <div class="flex flex-wrap gap-2">
                   <span
-                    v-for="tech in project.technologies"
+                    v-for="tech in project.meta.technologies"
                     :key="tech"
                     class="px-3 py-1 border border-border text-xs font-medium"
                   >
@@ -132,23 +217,11 @@
                 </div>
               </div>
               <NuxtLink
-                :to="project._path"
+                :to="project.path"
                 class="inline-flex items-center gap-2 text-sm font-medium hover:gap-4 transition-all"
               >
                 View Project
-                <svg
-                  class="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
+                <ArrowRight class="w-4 h-4" />
               </NuxtLink>
             </div>
           </div>
@@ -178,38 +251,3 @@
     </section>
   </div>
 </template>
-
-<script setup lang="ts">
-const selectedCategory = ref("All");
-
-const { data: allProjects } = await useAsyncData("projects", () =>
-  queryContent("projects").sort({ year: -1, id: -1 }).find(),
-);
-
-const categories = computed(() => {
-  const cats = new Set(["All"]);
-  allProjects.value?.forEach((project) => cats.add(project.category));
-  return Array.from(cats);
-});
-
-const filteredProjects = computed(() => {
-  if (!allProjects.value) return [];
-  if (selectedCategory.value === "All") {
-    return allProjects.value;
-  }
-  return allProjects.value.filter(
-    (project) => project.category === selectedCategory.value,
-  );
-});
-
-useHead({
-  title: "Projects - Portfolio",
-  meta: [
-    {
-      name: "description",
-      content:
-        "Explore my portfolio of web development, design, and branding projects.",
-    },
-  ],
-});
-</script>

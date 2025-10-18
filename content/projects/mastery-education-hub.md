@@ -2,11 +2,11 @@
 title: Mastery Education Hub
 description: Comprehensive e-learning platform with personalized learning paths, digital classrooms, and collaborative tools for modern education.
 category: Web Development
-year: 2024
+year: 2025
 featured: true
-image: /placeholder.svg?height=600&width=800&query=modern education platform with courses and learning dashboard
-liveUrl: https://mastery.co.ke
-githubUrl: https://github.com/kemboielvis22
+image: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU56AH6VQ9jwobc40EVUdlEpQbveR85VMN5Q&s
+liveUrl: https://masteryhub.co.ke
+githubUrl: https://github.com/kemboi22
 technologies:
   - Nuxt.js
   - Vue.js
