@@ -1,3 +1,98 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import { useHead } from "#imports";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const form = ref({
+  name: "",
+  email: "",
+  subject: "",
+  message: "",
+});
+
+const isSubmitting = ref(false);
+const submitMessage = ref("");
+const submitSuccess = ref(false);
+const openFaq = ref<number | null>(null);
+
+const handleSubmit = async () => {
+  isSubmitting.value = true;
+  submitMessage.value = "";
+
+  // Simulate form submission
+  await new Promise((resolve) => setTimeout(resolve, 1500));
+
+  // In a real application, you would send the form data to your backend here
+  console.log("Form submitted:", form.value);
+
+  submitSuccess.value = true;
+  submitMessage.value =
+    "Thank you for your message! I'll get back to you soon.";
+
+  // Reset form
+  form.value = {
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  };
+
+  isSubmitting.value = false;
+
+  // Clear success message after 5 seconds
+  setTimeout(() => {
+    submitMessage.value = "";
+  }, 5000);
+};
+
+const faqs = [
+  {
+    question: "What is your typical project timeline?",
+    answer:
+      "Project timelines vary depending on scope and complexity. A simple website might take 2-4 weeks, while a complex web application could take 2-3 months. I provide detailed timelines during the initial consultation.",
+  },
+  {
+    question: "Do you work with clients remotely?",
+    answer:
+      "Yes! I work with clients worldwide. I'm experienced in remote collaboration and use tools like Zoom, Slack, and Figma to ensure smooth communication throughout the project.",
+  },
+  {
+    question: "What is your design process?",
+    answer:
+      "My process typically includes: discovery and research, wireframing and prototyping, visual design, development, testing, and launch. I involve clients at every stage to ensure the final product meets their vision.",
+  },
+  {
+    question: "Do you provide ongoing support after launch?",
+    answer:
+      "Yes, I offer maintenance and support packages for all projects. This includes bug fixes, updates, and minor modifications. We can discuss the best support plan for your needs.",
+  },
+  {
+    question: "What are your rates?",
+    answer:
+      "Rates vary depending on project scope, timeline, and complexity. I offer both project-based and hourly rates. Contact me with your project details for a custom quote.",
+  },
+];
+
+useHead({
+  title: "Contact - Portfolio",
+  meta: [
+    {
+      name: "description",
+      content: "Get in touch to discuss your project or just say hello.",
+    },
+  ],
+});
+</script>
 <template>
   <div class="pt-16">
     <!-- Hero Section -->
@@ -387,99 +482,3 @@
     </section>
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref } from "vue";
-import { useHead } from "#imports";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Card } from "@/components/ui/card";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
-const form = ref({
-  name: "",
-  email: "",
-  subject: "",
-  message: "",
-});
-
-const isSubmitting = ref(false);
-const submitMessage = ref("");
-const submitSuccess = ref(false);
-const openFaq = ref<number | null>(null);
-
-const handleSubmit = async () => {
-  isSubmitting.value = true;
-  submitMessage.value = "";
-
-  // Simulate form submission
-  await new Promise((resolve) => setTimeout(resolve, 1500));
-
-  // In a real application, you would send the form data to your backend here
-  console.log("Form submitted:", form.value);
-
-  submitSuccess.value = true;
-  submitMessage.value =
-    "Thank you for your message! I'll get back to you soon.";
-
-  // Reset form
-  form.value = {
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  };
-
-  isSubmitting.value = false;
-
-  // Clear success message after 5 seconds
-  setTimeout(() => {
-    submitMessage.value = "";
-  }, 5000);
-};
-
-const faqs = [
-  {
-    question: "What is your typical project timeline?",
-    answer:
-      "Project timelines vary depending on scope and complexity. A simple website might take 2-4 weeks, while a complex web application could take 2-3 months. I provide detailed timelines during the initial consultation.",
-  },
-  {
-    question: "Do you work with clients remotely?",
-    answer:
-      "Yes! I work with clients worldwide. I'm experienced in remote collaboration and use tools like Zoom, Slack, and Figma to ensure smooth communication throughout the project.",
-  },
-  {
-    question: "What is your design process?",
-    answer:
-      "My process typically includes: discovery and research, wireframing and prototyping, visual design, development, testing, and launch. I involve clients at every stage to ensure the final product meets their vision.",
-  },
-  {
-    question: "Do you provide ongoing support after launch?",
-    answer:
-      "Yes, I offer maintenance and support packages for all projects. This includes bug fixes, updates, and minor modifications. We can discuss the best support plan for your needs.",
-  },
-  {
-    question: "What are your rates?",
-    answer:
-      "Rates vary depending on project scope, timeline, and complexity. I offer both project-based and hourly rates. Contact me with your project details for a custom quote.",
-  },
-];
-
-useHead({
-  title: "Contact - Portfolio",
-  meta: [
-    {
-      name: "description",
-      content: "Get in touch to discuss your project or just say hello.",
-    },
-  ],
-});
-</script>

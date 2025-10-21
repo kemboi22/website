@@ -1,3 +1,128 @@
+<script setup lang="ts">
+import { useHead } from "#imports";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+
+const experience = [
+  {
+    title: "Developer",
+    company: "Genius Dynamics",
+    location: "Remote",
+    period: "Nov 2022 - Present",
+    description:
+      "Building and maintaining user-centered software applications with focus on open source projects.",
+    highlights: [
+      "Integrated design feedback to build user-centered software applications",
+      "Managed software development life cycle leveraging project management talents",
+      "Maintain School systems and develop NethServer modules for easy deployment",
+      "Collaborate on open source projects based on Docker/Podman",
+    ],
+  },
+  {
+    title: "Developer",
+    company: "EMaxy IT",
+    location: "Kisii, Kenya",
+    period: "Jan 2023 - Present",
+    description:
+      "Full-stack development with client interaction and software implementation.",
+    highlights: [
+      "Employed best practices in software development",
+      "Analyzed complex software issues and implemented solutions",
+      "Interact with clients to find solutions through software implementation",
+      "Integrated advanced technologies to improve software performance",
+    ],
+  },
+  {
+    title: "Developer",
+    company: "Clifford Technologies",
+    location: "Nairobi, Kenya",
+    period: "June 2022 - July 2022",
+    description: "Frontend development and fleet management system creation.",
+    highlights: [
+      "Worked within Agile frameworks to meet project timelines",
+      "Contributed to code reviews, debugging and optimization",
+      "Created fleet Management system",
+      "Participated in architecture discussions for system enhancements",
+    ],
+  },
+];
+
+const skillCategories = [
+  {
+    name: "Frontend",
+    skills: [
+      "Vue.js",
+      "Nuxt",
+      "Svelte",
+      "TypeScript",
+      "Tailwind CSS",
+      "HTML/CSS",
+    ],
+  },
+  {
+    name: "Backend",
+    skills: [
+      "Node.js",
+      "Adonis JS",
+      "PostgreSQL",
+      "Surreal DB",
+      "REST APIs",
+      "Gin",
+      "GraphQL",
+      "PHP",
+      "Laravel",
+    ],
+  },
+  // {
+  //   name: "Design",
+  //   skills: [
+  //     "Figma",
+  //     "Adobe XD",
+  //     "Photoshop",
+  //     "Illustrator",
+  //     "Prototyping",
+  //     "UI/UX",
+  //     "Penpot",
+  //   ],
+  // },
+  {
+    name: "Tools",
+    skills: ["Git", "VIM", "Docker", "Vercel", "GitHub Actions", "Vite"],
+  },
+];
+
+const principles = [
+  {
+    number: "01",
+    title: "Simplicity",
+    description:
+      "Strip away the unnecessary to reveal the essential. Every element should serve a purpose.",
+  },
+  {
+    number: "02",
+    title: "Functionality",
+    description:
+      "Beautiful design means nothing if it doesn't work. Form follows function, always.",
+  },
+  {
+    number: "03",
+    title: "Attention to Detail",
+    description:
+      "The smallest details make the biggest difference. Perfection is in the nuances.",
+  },
+];
+
+useHead({
+  title: "About - Portfolio",
+  meta: [
+    {
+      name: "description",
+      content: "Learn more about my experience, skills, and design philosophy.",
+    },
+  ],
+});
+</script>
 <template>
   <div class="pt-16">
     <!-- Hero Section -->
@@ -40,10 +165,10 @@
             <p class="text-muted-foreground leading-relaxed">
               Knowledgeable and skilled software development professional
               offering advanced abilities in wide range of programming languages
-              including Java, Javascript, PHP, Golang, C# and TypeScript.
-              Quickly understand requirements for new systems and creates robust
-              code. Familiar with testing, debugging and correcting problems
-              found in existing software systems.
+              including Javascript, PHP, Golang, C# and TypeScript. Quickly
+              understand requirements for new systems and creates robust code.
+              Familiar with testing, debugging and correcting problems found in
+              existing software systems.
             </p>
           </div>
           <div class="space-y-6">
@@ -58,7 +183,7 @@
                 </div>
                 <div>
                   <dt class="text-muted-foreground">Experience</dt>
-                  <dd class="font-medium">3+ Years</dd>
+                  <dd class="font-medium">5+ Years</dd>
                 </div>
                 <div>
                   <dt class="text-muted-foreground">Focus</dt>
@@ -253,125 +378,3 @@
     </section>
   </div>
 </template>
-
-<script setup lang="ts">
-import { useHead } from "#imports";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-
-const experience = [
-  {
-    title: "Developer",
-    company: "Genius Dynamics",
-    location: "Remote",
-    period: "Nov 2022 - Present",
-    description:
-      "Building and maintaining user-centered software applications with focus on open source projects.",
-    highlights: [
-      "Integrated design feedback to build user-centered software applications",
-      "Managed software development life cycle leveraging project management talents",
-      "Maintain School systems and develop NethServer modules for easy deployment",
-      "Collaborate on open source projects based on Docker/Podman",
-    ],
-  },
-  {
-    title: "Developer",
-    company: "EMaxy IT",
-    location: "Kisii, Kenya",
-    period: "Jan 2023 - Present",
-    description:
-      "Full-stack development with client interaction and software implementation.",
-    highlights: [
-      "Employed best practices in software development",
-      "Analyzed complex software issues and implemented solutions",
-      "Interact with clients to find solutions through software implementation",
-      "Integrated advanced technologies to improve software performance",
-    ],
-  },
-  {
-    title: "Developer",
-    company: "Clifford Technologies",
-    location: "Nairobi, Kenya",
-    period: "June 2022 - July 2022",
-    description: "Frontend development and fleet management system creation.",
-    highlights: [
-      "Worked within Agile frameworks to meet project timelines",
-      "Contributed to code reviews, debugging and optimization",
-      "Created fleet Management system",
-      "Participated in architecture discussions for system enhancements",
-    ],
-  },
-];
-
-const skillCategories = [
-  {
-    name: "Frontend",
-    skills: [
-      "Vue.js",
-      "Nuxt",
-      "React",
-      "TypeScript",
-      "Tailwind CSS",
-      "HTML/CSS",
-    ],
-  },
-  {
-    name: "Backend",
-    skills: [
-      "Node.js",
-      "Express",
-      "PostgreSQL",
-      "MongoDB",
-      "REST APIs",
-      "GraphQL",
-    ],
-  },
-  {
-    name: "Design",
-    skills: [
-      "Figma",
-      "Adobe XD",
-      "Photoshop",
-      "Illustrator",
-      "Prototyping",
-      "UI/UX",
-    ],
-  },
-  {
-    name: "Tools",
-    skills: ["Git", "VS Code", "Docker", "Vercel", "GitHub Actions", "Webpack"],
-  },
-];
-
-const principles = [
-  {
-    number: "01",
-    title: "Simplicity",
-    description:
-      "Strip away the unnecessary to reveal the essential. Every element should serve a purpose.",
-  },
-  {
-    number: "02",
-    title: "Functionality",
-    description:
-      "Beautiful design means nothing if it doesn't work. Form follows function, always.",
-  },
-  {
-    number: "03",
-    title: "Attention to Detail",
-    description:
-      "The smallest details make the biggest difference. Perfection is in the nuances.",
-  },
-];
-
-useHead({
-  title: "About - Portfolio",
-  meta: [
-    {
-      name: "description",
-      content: "Learn more about my experience, skills, and design philosophy.",
-    },
-  ],
-});
-</script>
