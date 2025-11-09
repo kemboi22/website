@@ -3,6 +3,9 @@ FROM node:lts-alpine
 # Install pnpm
 RUN npm install -g pnpm
 
+# Install build dependencies for native modules
+RUN apk add --no-cache python3 make g++ sqlite-dev
+
 WORKDIR /app
 
 # Copy package files
