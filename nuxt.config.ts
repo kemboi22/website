@@ -7,7 +7,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://yourdomain.com",
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://kemboielvis.dev",
     },
   },
 
@@ -22,6 +22,23 @@ export default defineNuxtConfig({
     "@nuxtjs/sitemap",
     "@nuxtjs/robots",
   ],
+
+  sitemap: {
+    hostname: "https://kemboielvis.dev",
+    gzip: true,
+    routes: async () => {
+      const routes = [
+        { url: "/", changefreq: "daily", priority: 1 },
+        { url: "/about", changefreq: "monthly", priority: 0.9 },
+        { url: "/projects", changefreq: "weekly", priority: 0.8 },
+        { url: "/blogs", changefreq: "weekly", priority: 0.7 },
+        { url: "/contact", changefreq: "monthly", priority: 0.6 },
+        { url: "/services", changefreq: "monthly", priority: 0.7 },
+        { url: "/tech-stack", changefreq: "monthly", priority: 0.6 },
+      ];
+      return routes;
+    },
+  },
 
   css: ["./app/assets/css/tailwind.css", "./app/assets/css/animations.css"],
 
