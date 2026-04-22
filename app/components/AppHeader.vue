@@ -53,13 +53,7 @@
                 d="M4 6h16M4 12h16M4 18h16"
               />
             </svg>
-            <svg
-              v-else
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -80,10 +74,7 @@
         leave-from-class="opacity-100 translate-y-0"
         leave-to-class="opacity-0 -translate-y-4"
       >
-        <div
-          v-if="mobileMenuOpen"
-          class="lg:hidden pt-4 pb-2 border-t border-border mt-4"
-        >
+        <div v-if="mobileMenuOpen" class="lg:hidden pt-4 pb-2 border-t border-border mt-4">
           <div class="flex flex-col gap-3">
             <NuxtLink
               v-for="link in navLinks"
@@ -112,6 +103,7 @@ const mobileMenuOpen = ref(false);
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
+  { name: "Github", path: "/github" },
   { name: "Projects", path: "/projects" },
   { name: "Services", path: "/services" },
   { name: "Tech Stack", path: "/tech-stack" },
